@@ -1,0 +1,108 @@
+#+title: Emacs Packages
+#+filetags: :macos:software
+#+DATE:2025-06-01
+
+* Edit Mode
+** Meow
+
+* 英文学习三部曲
+** 阅读
+- eaf-pdf-viewer
+** 视频
+- eaf-video-viewer
+** 写作
+- real-time-translation
+
+* jin-theme
+* auto-save
+* consult
+* vertico
+* orderless
+* AmaiKinono@puni.el
+* DogLooksGood@emacs-rime.el
+* Elilif@emacs-anki-helper.el
+* Fanael@highlight-defined.el
+* Vonfry@zoxide.el.el
+* Wilfred@helpful.el
+* Wilfred@refine.el
+* abo-abo@ace-window.el
+* abo-abo@avy.el
+* abo-abo@org-download.el
+* andreasjansson@language-detection.el.el
+* bastibe@org-journal.el
+* benma@visual-regexp.el.el
+* bmag@imenu-list.el
+* bzg@org-mode.el
+* casouri@vundo.el
+* casouri@xeft.el
+* cute-jumper@ace-pinyin.el
+* cute-jumper@pinyinlib.el.el
+* emacs-openai@deepl.el
+* emacs-pe@nov.el.el
+* emacsmirror@gcmh.el
+* emacsmirror@highlight-parentheses.el
+* emacsmirror@memory-usage.el
+* flycheck@flycheck.el
+* fxbois@web-mode.el
+* ginqi7@auto-browser.el
+* Update 2025-04-29
+* 2 weeks ago
+* ginqi7@deno-bridge-jieba.el
+* ginqi7@dictionary-overlay.el
+* ginqi7@eaf-pdf-viewer.el
+* Update 2025-04-16
+* ginqi7@eaf-video-player.el
+* Update 2025-04-29
+* 2 weeks ago
+* ginqi7@emacs-application-framework.el
+* Update 2025-04-16
+* ginqi7@html2org.el
+* ginqi7@image-slicing.el
+* ginqi7@justify-kp.el
+* ginqi7@leetcode-emacs.el
+* ginqi7@named-format.el
+* ginqi7@plantuml-emacs.el
+* ginqi7@real-time-translation.el
+* Update 2025-04-29
+* 2 weeks ago
+* ginqi7@syllable-stress.el
+* jacktasia@dumb-jump.el
+* joaotavora@yasnippet.el
+* jrblevin@markdown-mode.el
+* justinbarclay@parinfer-rust-mode.el
+* jwiegley@emacs-async.el
+* karthink@gptel.el
+* Update as of 2025-04-12
+* ljos@jq-mode.el
+* magit@magit.el
+* magit@with-editor.el
+* manateelazycat@awesome-tray.el
+* manateelazycat@key-echo.el
+* Update 2025-04-16
+* manateelazycat@lsp-bridge.el
+* manateelazycat@mind-wave.el
+* manateelazycat@sort-tab.el
+* manateelazycat@thing-edit.el
+* mhayashi1120@Emacs-wgrep.el
+* minad@marginalia.el
+* minad@tempel.el
+* misohena@phscroll.el
+* ncaq@auto-sudoedit.el
+* nflath@sudo-edit.el
+* oantolin@embark.el
+* pashky@restclient.el.el
+* radian-software@ctrlf.el
+* rainstormstudio@nerd-icons-dired.el
+* rainstormstudio@nerd-icons.el.el
+* rnkn@olivetti.el
+* sigma@pcache.el
+* skuro@plantuml-mode.el
+* tarsius@hl-todo.el
+* tkf@emacs-request.el
+* tumashu@posframe.el
+* twlz0ne@separedit.el.el
+* xuchunyang@elisp-demos.el
+* xuchunyang@shr-tag-pre-highlight.el.el
+* yoshiki@yaml-mode.el
+* zk-phi@indent-guide.el
+* zkry@yaml.el.el

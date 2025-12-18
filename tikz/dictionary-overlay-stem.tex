@@ -1,0 +1,58 @@
+% figure.tex
+\documentclass[tikz, border=15pt]{standalone}
+\usepackage{xeCJK}
+\usepackage{tikz}
+% 英文字体设置
+\setmainfont{Alegreya}
+\setsansfont{Alegreya}
+
+% 中文字体设置
+\setCJKmainfont{仓耳今楷04 W04}
+\setCJKsansfont{仓耳今楷04 W04}
+
+\usetikzlibrary{arrows.meta, shapes, positioning, calc, fit}
+
+\begin{document}
+\begin{tikzpicture} [
+    module/.style={draw, very thick, rounded corners, minimum
+    width=15ex, minimum height=10ex, align=center},
+    cell/.style={draw, very thick, minimum
+    width=15ex, minimum height=4ex, align=center},
+    red-module/.style={module, fill=red!20},
+    orange-module/.style={module, fill=orange!20},
+    yellow-module/.style={module, fill=yellow!20},
+    cyan-module/.style={module, fill=cyan!20},
+    arrow/.style={-stealth, thick, rounded corners},
+  ]
+
+  \node[red-module] (consistent) {consistent};
+  \node[orange-module, below=of consistent] (consistency) {consistency};
+  \node[yellow-module, below=of consistency] (consists) {consists};
+
+  \node[cyan-module, diamond, right=of consistency] (stemming) {Stemming};
+  \node[module, minimum
+  width=10ex, circle, fill=gray!20, right=of stemming] (consist) {consist};
+
+  \node[module, right= 3cm of consist,
+    minimum width = 4cm,
+    minimum height = 4cm,
+    label = {[yshift=-0.8cm] Unknown Words},
+    fill = blue!5
+  ] (unknown-words) {};
+
+  \node[cell, yshift=0.5cm] (word1) at (unknown-words) {consist};
+  \node[cell, below=-\pgflinewidth of word1 ] (word2) {consistent};
+  \node[cell, below=-\pgflinewidth of word2] (word3) {consistency};
+  \node[cell, below=-\pgflinewidth of word3] (word4) {consists};
+
+  \draw[arrow] (consistent) -| (stemming);
+  \draw[arrow] (consistency) -- (stemming);
+  \draw[arrow] (consists) -| (stemming);
+
+  \draw[arrow] (stemming) -- (consist);
+
+  \draw[arrow] (consist) -- (unknown-words) node[above,
+  midway, yshift=2mm, align=center]{原词和词干都加\\入到生词本当中};
+
+\end{tikzpicture}
+\end{document}

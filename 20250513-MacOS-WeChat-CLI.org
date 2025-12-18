@@ -1,0 +1,52 @@
+#+title: MacOS 微信 CLI
+#+filetags: :macos:software
+#+export_file_name: macos-wechat-cli
+#+DATE: 2025-05-13
+
+
+* 背景
+
+几年前，当微信 Web 没有被封时，我一直是使用 [[https://github.com/hexsum/Mojo-Weixin][Mojo-Weixin]] 通过 Emacs 来访问微信。只是很不幸，后来当微信 Web 无法访问了，该项目对我而言变得不可用。微信也没有提供公共的 api。很难有一个安全的第三方客户端。
+
+我对微信的需求比较简单。能够快速简单地在 Emacs 中查看/发送针对某几个人的信息。我并不是需要一个完整的微信客户端。
+
+MacOS 提供了 Accessibility API 去访问其他应用的 GUI，因此，我开发了 [[https://github.com/ginqi7/macos-wechat-cli][macos-wechat-cli]] 利用 Accessibility API 访问微信的 GUI，通过命令行来与微信进行交互。
+
+[[https://github.com/ginqi7/macos-wechat-cli][macos-wechat-cli]] 的目标不是开发一个完整的微信客户端，而是借助 MacOS 微信 GUI，提供简单高效的 CLI 命令，能够供其他应用集成，访问微信。例如 [[https://github.com/ginqi7/macos-wechat-emacs][macos-wechat-emacs]]
+
+*只支持微信 3.8*
+
+* 优缺点
+** 优点
+1. 对微信没有任何侵入，没有被封禁的风险
+2. 通过 JSON 输出，可以很容易被其他应用集成
+3. 尽可优化了 Accessibility API 访问的性能，能够在 0.5 秒里完成数据更新、数据发送
+
+** 缺点
+1. 如果微信升级过程中 UI 发生变化，应用可能会出问题。
+2. 当前版本有中文相关的硬编码，只支持中文微信
+3. 只展示当前 GUI 已经加载出来的信息
+
+** 已知问题
+1. 所有信息都会展示为“1 条未读消息”, 因此把“1 条未读消息”展示为“无未读信息”
+2. 预览图片、链接后，需要关闭才能进行后续的操作。
+3. 微信必须打开，可以放置在后台，但不能最小化。
+
+* 集成插件
+** [[https://github.com/ginqi7/macos-wechat-emacs][macos-wechat-emacs]]
+当前版本 macos-wechat-emacs 只提供了简单的交互界面（对话列表，消息页面）。后续将优化消息页面的展示。
+
+** 开发详情
+
+* 定位链
+1. 微信聊天列标：[.splitGroup, .scrollArea, .table, .row, .cell, .row]
+2. 微信聊天按钮： [.radioButton]
+3. 定位聊天输入框：[.splitGroup, .splitGroup, .scrollArea, .textArea],
+4. 定位详细的聊天详情：[.splitGroup, .splitGroup, .scrollArea, .table, .row, .cell, .unknown],
+
+* 图片、链接预览
+通过 message index 定位到信息在微信 GUI 中的位置，通过触发 press 事件，展示预览窗口。
+
+* 性能优化
+当微信 GUI 位于，最前台时，Accessibility API 的性能超快。当它位于后台时，性能会大幅下降。
+测试发现，如果 Accessibility API 前，对微信的进程发送一个按键事件。会提高后续的访问性能。

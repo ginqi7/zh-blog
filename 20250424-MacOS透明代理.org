@@ -1,0 +1,86 @@
+#+title: MacOS 透明代理
+#+filetags: :macos:proxy:
+#+DATE: 2025-04-24
+#+export_file_name: tproxy
+
+* 简介
+
+透明代理：用户在访问网络时无需特别配置或知晓代理的存在，不需要一个程序一个程序的设置。代理能够自动判断哪些请求需要通过代理，哪些请求直接链接。一般是通过修改路由表的方式实现。
+
+本文是参考 [[https://climbover.minidump.info/gateway/2023/06/25/macOS-transparent-proxy][macOS上的透明代理]] 这篇文章
+
+随便购买一个便宜的机场，使用 [[https://github.com/shadowsocks/shadowsocks-rust][shadowsocks-rust]] 连接机场。使用 [[https://murusfirewall.com/Documentation/OS%20X%20PF%20Manual.pdf][Packet Filter 一个状态检测型的包过滤防火墙]] 修改请求的路由。
+
+* 安装 shadowsocks-rust
+
+#+begin_src shell
+brew install shadowsocks-rust
+#+end_src
+
+* pf 配置
+#+begin_example
+scrub-anchor "com.apple/*"
+
+table <direct_cidr> persist file "/Users/a77/Downloads/tproxy/configs/direct_cidr.txt" #1
+
+nat-anchor "com.apple/*"
+rdr-anchor "com.apple/*"
+
+rdr pass on lo0 proto tcp from any to any port 0:1024 -> 127.0.0.1 port 59080 #2
+
+pass out route-to (lo0 127.0.0.1) proto tcp from any to !<direct_cidr> #3
+
+dummynet-anchor "com.apple/*"
+anchor "com.apple/*"
+load anchor "com.apple" from "/etc/pf.anchors/com.apple"
+#+end_example
+
+1. direct_cidr.txt 文件中定义了哪些 ip 地址不需要代理，[[https://github.com/missdeer/daily-weekly-build/tree/cidr][这里有一些ip地址]]
+2. 将所有发往本地回环接口 (lo0) 端口为 0-1024 的 TCP 流量，重定向到了本机的 59080 端口。
+3. 确保所有满足条件的出站 TCP 流量在发送之前被强制路由到本机的 lo0 接口，通过 127.0.0.1 转发出去。
+
+实际的调用逻辑是，先把需要代理的请求，发送到本地回环接口 (lo0)，然后，再把 lo0 上的流量重定向到 59080 端口（ss 会监听这个端口）。不需要代理的请求，不通过 lo0 直接发往目标。
+
+** 为什么需要先 route-to（强制路由）再 rdr（重定向）
+如果仅仅修改数据包的目标地址和端口，让数据包发往指定的新地址。数据包仍然经过物理接口（例如 en0），并且内核的路由子系统并没有将其当作本地流量处理，这可能导致 连接状态追踪（state tracking）异常，因为数据包的源地址仍然是外部地址，目标地址被改写为 127.0.0.1，但内核网络栈不一定会将这类数据包当作本地回环流量。
+
+因此需要将请求先 route-to（强制路由）到 lo0 接口，然后再重定向请求。但这样存在一个问题。route-to 到 lo0 的请求和自己发送给 127.0.0.1 的请求是一样的。如果把所有 lo0 的请求都 rdr 到 59080 端口，会导致无法访问到本地部署的 127.0.0.1 服务。
+
+因此，只选择重定向 0-1024（具体的数字，根据后续的深入使用来配置）请求的端口到代理服务，其他的端口假设为本地服务端口。
+
+* SS 配置
+#+begin_src json
+  {
+  "locals": [
+    {
+      "local_address": "0.0.0.0",
+      "local_port": 59080,
+      "protocol": "redir"
+    }
+  ],
+  "ss_local_port": 1080,
+  "local_address": "127.0.0.1",
+  "servers": [
+]
+  }
+#+end_src
+
+* SSH 配置
+上述配置，进行 github git SSH 操作时无法联通。因此单独配置 ssh, 端口设置为 443（违背了透明原则，后续看看能否解决。）。
+#+begin_example
+Host github.com
+  Hostname ssh.github.com
+  Port 443
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
+#+end_example
+
+* 问题
+无法使用本地的 1024 以下的端口。例如，启动 docker 容器，映射到 1024 以内的端口。
+
+* tproxy 脚本
+
+基于上述逻辑，编写一个 tproxy 脚本。
+
+https://github.com/ginqi7/tproxy

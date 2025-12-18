@@ -1,0 +1,85 @@
+#+title: MacOS 软件
+#+filetags: :macos:software
+#+DATE: 2025-12-18
+
+我对软件的选择，通常是两种相反的逻辑：极简或者高度可配置。
+
+一个软件要么提供了某一个简单便捷的功能，要么是它存在高度可配置的方法，来符合我个性化的需求。
+
+* 浏览器
+我对浏览器的需求：
+1. Chromium 内核，我需要通过 [[https://github.com/ginqi7/auto-browser][auto-browser]] 自动化操作；
+2. 垂直或隐藏tab，我通常会打开十几个tab，如果是顶部的tab很难查看，切换；
+3. 可配置的快捷键操作；
+4. 稳定。
+
+浏览器对比
+|            | brave | arc  | Chrome | vivaldi |
+|------------+-------+------+--------+---------|
+| 可配置tab  | 普通  | 一般 | 糟糕   | 高级    |
+| 外观       | 普通  | 好看 | 普通   | 可配置  |
+| 稳定性     | 稳定  | 一般 | 稳定   | 糟糕    |
+| 广告过滤   | 好    | 一般 | 一般   | 一般    |
+| 配置同步   | 糟糕  | 好   | 好     | 好      |
+| 快捷键操作 | 一般  | 一般 | 一般   | 一般    |
+
+因为我在 MacOS上使用 vivaldi，稳定性极差。最终选择了 Brave。
+
+* Chromium 插件
+- [[https://chromewebstore.google.com/detail/bewlybewly/bbbiejemhfihiooipfcjmjmbfdmobobp][BewlyBewly]] ：Bilibili 美化
+- [[https://chromewebstore.google.com/detail/bewlybewly/eaoelafamejbnggahofapllmfhlhajdd][小电视空降助手]] ：Bilibili 跳过软广
+- [[https://chromewebstore.google.com/detail/bewlybewly/jinjaccalgkegednnccohejagnlnfdag][暴力猴]] ：自动化脚本
+- [[https://chromewebstore.google.com/detail/bewlybewly/hgeljhfekpckiiplhkigfehkdpldcggm][Auto Refresh Plus]] ：自动刷新页面
+- [[https://chromewebstore.google.com/detail/bewlybewly/gfbliohnnapiefjpjlpjnehglfpaknnc][Surfingkeys]] ：Vim 快捷键
+- [[https://chromewebstore.google.com/detail/bewlybewly/pncfbmialoiaghdehhbnbhkkgmjanfhe][uBlacklist]] ：谷歌搜索结果中屏蔽特定的网站
+- [[https://chromewebstore.google.com/detail/bewlybewly/ldgfbffkinooeloadekpmfoklnobpien][Raindrop.io]] ：书签管理
+- [[https://chromewebstore.google.com/detail/bewlybewly/cclelndahbckbenkjhflpdbgdldlbecc][Get cookies.txt]] ：获取Cookies
+
+
+* 通信
+| 软件软件     | 说明                                                     |
+|--------------+----------------------------------------------------------|
+| [[https://dldir1v6.qq.com/weixin/mac/WeChatMac_10_15.dmg][微信]]         | 版本 3.8.10，该版本能够通过 Accessibility API 充分操作。 |
+| [[https://github.com/ginqi7/macos-wechat-cli][wechat-cli]]   | CLI 命令行来接收、发送微信消息                           |
+| [[https://github.com/ginqi7/macos-wechat-emacs][wechat-Emacs]] | 通过微信来接收、发送微信消息                             |
+
+* 终端
+** ghostty
+** Alacritty
+优点：极简
+缺点：icon 丑，中文字体不可配置
+* 密码
+** bitwarden
+* 记忆辅助
+| 软件软件     | 说明                                         |
+|--------------+----------------------------------------------|
+| [[https://apps.ankiweb.net/][anki]]         | 间隔重复学习软件                             |
+| [[https://github.com/Elilif/emacs-anki-helper][anki-helper]]  | 通过 org mode 同步 anki                      |
+| [[https://github.com/ginqi7/auto-browser][auto-browser]] | 通过 Emacs 控制浏览器来访问 [[https://ankiweb.net/][AnkiWeb]] 进行学习 |
+
+* 截屏、录屏
+
+| 软件软件 | 说明                       |
+|----------+----------------------------|
+| [[https://www.cockos.com/licecap/][licecap]]  | 录制桌面 gif               |
+| [[https://obsproject.com/][OBS]]      | 录制多个程序一起的 mp4     |
+| [[https://github.com/xenodium/macosrec][macosrec]] | 录制单个程序的截图或者 gif |
+| [[https://shottr.cc/][shottr]]   | 区域截图                   |
+
+* Menu Bar 管理
+鉴于 MacOS 糟糕的 Menu Bar 管理能力，直接把它隐藏，用 SketchyBar 替代。
+* 词典
+** 欧路词典
+* 输入法
+
+| 软件软件         | 说明                   |
+|------------------+------------------------|
+| [[https://rime.im/][Rime]]             | 高可配置的输入法       |
+
+* 容器管理
+** colima
+
+* Hammerspoon
+- 输入法自动切换
+- 窗口管理
+- 快捷键管理
